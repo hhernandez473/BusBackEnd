@@ -6,7 +6,7 @@ const dbConnection = async() => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
-            useFindAndModify: true
+            useFindAndModify: false
         });
         console.log('base de datos online');
     } catch (error) {
