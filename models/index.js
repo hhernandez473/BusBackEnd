@@ -6,8 +6,8 @@ const Server = require('./server');
 const Route = require('./route');
 const Town = require('./town');
 const User = require('./user');
-
-
+const Schedule = require('./schedule');
+const StopBus = require('./stopBus');
 module.exports = {
     Country,
     Departament,
@@ -16,5 +16,7 @@ module.exports = {
     Route,
     Server,
     Town,
-    User
+    User,
+    Schedule,
+    StopBus
 }

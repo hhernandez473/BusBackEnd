@@ -15,7 +15,9 @@ class Server {
             municipality: '/api/municipality',
             town: '/api/town',
             route: '/api/route',
+            schedule: '/api/schedule',
             user: '/api/usuarios',
+            stopBus: '/api/stopBus'
         }
         //Conect to DB
         this.conectarDB();
@@ -50,7 +52,9 @@ class Server {
         this.app.use( this.paths.municipality, require('../routes/municipality'));
         this.app.use( this.paths.route, require('../routes/routeM'));
         this.app.use( this.paths.town, require('../routes/town'));
+        this.app.use( this.paths.schedule, require('../routes/schedule'));
         this.app.use( this.paths.user, require('../routes/usuarios'));
+        this.app.use( this.paths.stopBus, require('../routes/stopBus'));
     }
 
     listen() {
