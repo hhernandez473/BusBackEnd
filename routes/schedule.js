@@ -6,7 +6,9 @@ const { isAdminRole, validateJWT, validateField } = require('../middlewares');
 const {
     getSchedule,
     getSchedules,
-    schedulePost
+    schedulePost,
+    schedulePut,
+    scheduleDel
 } = require('../controllers/schedule');
 
 const { scheduleExist, routeExistSchedule } = require('../helpers/db-validators');
@@ -27,10 +29,32 @@ router.get('/:id', [
 //post schedule
 router.post('/', [
     validateJWT,
-    check('name', 'El nombre es obligatorio').not().isEmpty(),
-    check('name').custom( scheduleExist ),
-    check('route').custom( routeExistSchedule ),
+    check('route').custom(routeExistSchedule),
+    check('detail.*.driverAssigned', 'Debe asignar un conductor').not().isEmpty(),
+    check('detail.*.driverAssigned', 'Debe asignar un conductor').isMongoId(),
+    check('detail.*.departureTime', 'La hora de salida es obligatoria').not().isEmpty(),
+    check('detail.*.returnTime', 'La hora de salida es obligatoria').not().isEmpty(),
     validateField
-],  schedulePost);
+], schedulePost);
+
+//put schedule
+router.put('/:id', [
+    validateJWT,
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(scheduleExist),
+    check('detail.*.driverAssigned', 'Debe asignar un conductor').not().isEmpty(),
+    check('detail.*.driverAssigned', 'Debe asignar un conductor').isMongoId(),
+    check('detail.*.departureTime', 'La hora de salida es obligatoria').not().isEmpty(),
+    check('detail.*.returnTime', 'La hora de salida es obligatoria').not().isEmpty(),
+    validateField
+], schedulePut);
+
+//delete schedule
+router.delete('/:id', [
+    validateJWT,
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom( scheduleExist ),
+    validateField,  
+],  scheduleDel);
 
 module.exports = router;

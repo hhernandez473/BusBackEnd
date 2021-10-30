@@ -42,7 +42,30 @@ const stopBusPost = async(req, res = response) => {
     res.status(201).json(stopBus);
 }
 
+const stopBusPut = async (req, res = response) => {
+
+    const { id } = req.params;
+    const { _id, ...rest } = req.body;
+    
+
+    const stopBus = await StopBus.updateMany( {_id: id}, {$set: rest} );
+
+    res.json({
+        stopBus
+    });
+}
+
+const stopBusDel = async (req, res = response) => {
+    const { id } = req.params;
+    const stopBus = await StopBus.findByIdAndUpdate(id, { status: false });
+    res.json({
+        stopBus
+    });    
+}
+
 module.exports = {
     getStopBus, 
-    stopBusPost
+    stopBusPost,
+    stopBusPut,
+    stopBusDel
 }

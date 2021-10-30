@@ -1,3 +1,4 @@
+const Bus = require('./bus');
 const Country = require('./country');
 const Departament = require('./departament');
 const Municipality = require('./municipality');
@@ -9,6 +10,7 @@ const User = require('./user');
 const Schedule = require('./schedule');
 const StopBus = require('./stopBus');
 module.exports = {
+    Bus,
     Country,
     Departament,
     Municipality,

@@ -7,7 +7,7 @@ const getSchedules = async (req, res = response) => {
     const query = { status: true };
 
     const [schedules] = await Promise.all([
-        Schedule.find(query).populate('user', 'name')
+        Schedule.find(query).populate('user', 'name').populate('route', 'name').populate('detail.driverAssigned', 'name')
     ]);
 
     res.json({
@@ -32,18 +32,8 @@ const schedulePost = async (req, res = response) => {
 
     const { status, user, ...body } = req.body;
 
-    const scheduleDB = await Schedule.findOne({ name: body.name });
-
-
-    if (scheduleDB) {
-        return res.status(400).json({
-            msg: `El horario  ${scheduleDB.name}, ya existe`
-        });
-    }
-
     const data = {
         ...body,
-        name: body.name.toUpperCase(),
         user: req.user._id
     }
 
@@ -55,10 +45,33 @@ const schedulePost = async (req, res = response) => {
     res.status(201).json(schedule);
 }
 
+const schedulePut = async (req, res = response) => {
+
+    const { id } = req.params;
+    const { _id, ...rest } = req.body;
+    
+
+    const scheduleRes = await Schedule.updateMany( {_id: id}, {$set: rest} );
+
+    res.json({
+        scheduleRes
+    });
+}
+
+const scheduleDel = async (req, res = response) => {
+    const { id } = req.params;
+    const schedule = await Schedule.findByIdAndUpdate(id, { status: false });
+    res.json({
+        schedule
+    });    
+}
+
 module.exports = {
-    getSchedules,
     getSchedule,
+    getSchedules,
+    scheduleDel,
     schedulePost,
+    schedulePut
 }
 
 

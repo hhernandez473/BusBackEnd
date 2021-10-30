@@ -1,11 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 const ScheduleSchema = Schema({
-    name: {
-        type: String,
-        required: [true, 'El nombre es obligatorio'],
-        unique: true
-    },
     route: {
         type: Schema.Types.ObjectId,
         ref: 'Route',
@@ -13,6 +8,11 @@ const ScheduleSchema = Schema({
     },
     detail: [
         {
+            driverAssigned:{
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
             departureTime:{
                 type: String,
                 required: [true, 'La hora de inicio es obligatoria']

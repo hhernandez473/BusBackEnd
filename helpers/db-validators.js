@@ -58,20 +58,35 @@ const scheduleExist = async (eschedule = '') => {
 }
 
 const routeExist = async (id) => {
-  const stopBusID = await StopBus.findById({ route: id });
-  if (!stopBusID) {
-    throw new Error(`El id no existe ${id} `)
+  const stopBusID = await StopBus.findOne({ route: id });
+  if (stopBusID) {
+    throw new Error(`Ruta con paradas de bus ya registrada ${id} `)
   }
 }
 
 const routeExistSchedule = async (id) => {
-  const routeId = await Schedule.findOne({route: id});
-  if(routeId){
+  const routeId = await Schedule.findOne({ route: id });
+  if (routeId) {
     throw new Error(`La ruta ya tiene asignado un horario`)
   }
 }
 
+const stopBusIdExist = async (id) => {
+  const stopBusId = await StopBus.findById(id);
+  if (!stopBusId) {
+    throw new Error(`El id no existe ${id} `)
+  }
+}
+
+const busLicensePlatesExist = async (licensePlates = '') => {
+  const existlicensePlates= await User.findOne({ licensePlates });
+  if (existlicensePlates) {
+    throw new Error(`La placa ${licensePlates} ya esta registrada en la BD`)
+  }
+}
+
 module.exports = {
+  busLicensePlatesExist,
   countryExist,
   departamentExist,
   emailExist,
@@ -80,6 +95,7 @@ module.exports = {
   townExist,
   userIdExist,
   scheduleExist,
-  routeExist, 
+  stopBusIdExist,
+  routeExist,
   routeExistSchedule
 }
