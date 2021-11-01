@@ -29,7 +29,6 @@ router.get('/:id', [
 //get Schedule Route
 router.get('/route/:id', [
     check('id', 'No es un ID valido').isMongoId(),
-    check('route').custom(routeExistSchedule),
     validateField
 ], getScheduleXRoute);
 
