@@ -8,7 +8,8 @@ const {
     getSchedules,
     schedulePost,
     schedulePut,
-    scheduleDel
+    scheduleDel,
+    getScheduleXRoute
 } = require('../controllers/schedule');
 
 const { scheduleExist, routeExistSchedule } = require('../helpers/db-validators');
@@ -24,6 +25,13 @@ router.get('/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     validateField
 ], getSchedule);
+
+//get Schedule Route
+router.get('/route/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
+    check('route').custom(routeExistSchedule),
+    validateField
+], getScheduleXRoute);
 
 
 //post schedule

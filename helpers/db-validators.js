@@ -65,7 +65,7 @@ const routeExist = async (id) => {
 }
 
 const routeExistSchedule = async (id) => {
-  const routeId = await Schedule.findOne({ route: id });
+  const routeId = await Schedule.find({ route: id });
   if (routeId) {
     throw new Error(`La ruta ya tiene asignado un horario`)
   }

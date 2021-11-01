@@ -27,6 +27,13 @@ const getSchedule = async (req, res = response) => {
 
 }
 
+const getScheduleXRoute = async (req, res= response) => {
+    const { id } = req.params;
+    const query = { route: id };
+    const [schedules] = await Schedule.find(query);
+    res.json(schedules);
+}
+
 
 const schedulePost = async (req, res = response) => {
 
@@ -69,6 +76,7 @@ const scheduleDel = async (req, res = response) => {
 module.exports = {
     getSchedule,
     getSchedules,
+    getScheduleXRoute,
     scheduleDel,
     schedulePost,
     schedulePut
