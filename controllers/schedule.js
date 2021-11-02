@@ -37,7 +37,7 @@ const getScheduleXRoute = async (req, res= response) => {
 const getScheduleXDriver = async (req, res= response) => {
     const { id } = req.params;
     const query = { user: id };
-    const [schedules] = await Schedule.find(query);
+    const [schedules] = await Schedule.find(query).populate('route', 'name');
     res.json(schedules);
 }
 
